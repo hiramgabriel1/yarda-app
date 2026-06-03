@@ -38,12 +38,12 @@ struct OnboardingSchoolView: View {
             HStack(alignment: .center, spacing: 8) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(AppTheme.primary)
+                        .fill(AppTheme.brandPrimary)
                         .frame(width: 32, height: 32)
 
                     Image(systemName: "bag.fill")
                         .font(.system(size: 14, weight: .medium))
-                        .foregroundStyle(AppTheme.primaryForeground)
+                        .foregroundStyle(AppTheme.brandPrimaryForeground)
                 }
 
                 Text("Marketu")
@@ -56,7 +56,7 @@ struct OnboardingSchoolView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text("PASO 1 DE 3")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(AppTheme.primary)
+                    .foregroundStyle(AppTheme.brandPrimary)
                     .tracking(0.8)
                     .padding(.bottom, 4)
 
@@ -150,12 +150,12 @@ struct OnboardingSchoolView: View {
                     Image(systemName: "chevron.right")
                         .font(.system(size: 14, weight: .bold))
                 }
-                .foregroundStyle(AppTheme.primaryForeground)
+                .foregroundStyle(AppTheme.brandPrimaryForeground)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
-                .background(AppTheme.primary)
+                .background(AppTheme.brandPrimary)
                 .cornerRadius(16)
-                .shadow(color: AppTheme.primary.opacity(0.3), radius: 14, x: 0, y: 4)
+                .shadow(color: AppTheme.brandPrimary.opacity(0.3), radius: 14, x: 0, y: 4)
             }
             .buttonStyle(.plain)
             .opacity(selectedSchool == nil ? 0.5 : 1)
@@ -168,7 +168,7 @@ struct OnboardingSchoolView: View {
 
                 Text("Sugiérela aquí")
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(AppTheme.primary)
+                    .foregroundStyle(AppTheme.brandPrimary)
             }
             .padding(.top, 12)
         }

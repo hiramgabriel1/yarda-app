@@ -21,18 +21,18 @@ struct SchoolListItem: View {
             HStack(spacing: 12) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(school.isSelected ? AppTheme.primary : AppTheme.secondary)
+                        .fill(school.isSelected ? AppTheme.brandPrimary : AppTheme.brandSecondary)
                         .frame(width: 40, height: 40)
 
                     Image(systemName: "graduationcap.fill")
                         .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(school.isSelected ? AppTheme.primaryForeground : AppTheme.secondaryForeground)
+                        .foregroundStyle(school.isSelected ? AppTheme.brandPrimaryForeground : AppTheme.brandSecondaryForeground)
                 }
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(school.name)
                         .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(school.isSelected ? AppTheme.primary : AppTheme.foreground)
+                        .foregroundStyle(school.isSelected ? AppTheme.brandPrimary : AppTheme.foreground)
 
                     Text("\(school.type) · \(school.location)")
                         .font(.system(size: 12))
@@ -44,7 +44,7 @@ struct SchoolListItem: View {
                 if school.isSelected {
                     Image(systemName: "checkmark")
                         .font(.system(size: 16, weight: .bold))
-                        .foregroundStyle(AppTheme.primary)
+                        .foregroundStyle(AppTheme.brandPrimary)
                 }
             }
             .padding(.horizontal, 16)

@@ -7,7 +7,7 @@ enum UserRole {
 }
 
 struct OnboardingRoleView: View {
-    @State private var selectedRole: UserRole?
+    @Binding var selectedRole: UserRole?
     let onContinue: () -> Void
     var onBack: (() -> Void)?
 
@@ -39,7 +39,7 @@ struct OnboardingRoleView: View {
                         Text("Regresar")
                             .font(.system(size: 14, weight: .medium))
                     }
-                    .foregroundStyle(AppTheme.primary)
+                    .foregroundStyle(AppTheme.brandPrimary)
                 }
                 .buttonStyle(.plain)
                 .padding(.bottom, 16)
@@ -48,12 +48,12 @@ struct OnboardingRoleView: View {
             HStack(alignment: .center, spacing: 8) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(AppTheme.primary)
+                        .fill(AppTheme.brandPrimary)
                         .frame(width: 32, height: 32)
 
                     Image(systemName: "bag.fill")
                         .font(.system(size: 14, weight: .medium))
-                        .foregroundStyle(AppTheme.primaryForeground)
+                        .foregroundStyle(AppTheme.brandPrimaryForeground)
                 }
 
                 Text("Marketu")
@@ -66,7 +66,7 @@ struct OnboardingRoleView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text("PASO 3 DE 3")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(AppTheme.primary)
+                    .foregroundStyle(AppTheme.brandPrimary)
                     .tracking(0.8)
                     .padding(.bottom, 4)
 
@@ -119,14 +119,14 @@ struct OnboardingRoleView: View {
             HStack {
                 Text("Las dos cosas 🙌")
                     .font(.system(size: 15, weight: .medium))
-                    .foregroundStyle(selectedRole == .both ? AppTheme.primary : AppTheme.foreground)
+                    .foregroundStyle(selectedRole == .both ? AppTheme.brandPrimary : AppTheme.foreground)
 
                 Spacer()
 
                 if selectedRole == .both {
                     Image(systemName: "checkmark")
                         .font(.system(size: 16, weight: .bold))
-                        .foregroundStyle(AppTheme.primary)
+                        .foregroundStyle(AppTheme.brandPrimary)
                 }
             }
             .padding(.horizontal, 16)
@@ -134,7 +134,7 @@ struct OnboardingRoleView: View {
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(
-                        selectedRole == .both ? AppTheme.primary : AppTheme.border,
+                        selectedRole == .both ? AppTheme.brandPrimary : AppTheme.border,
                         lineWidth: selectedRole == .both ? 2 : 1
                     )
             )
@@ -155,12 +155,12 @@ struct OnboardingRoleView: View {
                     Image(systemName: "chevron.right")
                         .font(.system(size: 14, weight: .bold))
                 }
-                .foregroundStyle(AppTheme.primaryForeground)
+                .foregroundStyle(AppTheme.brandPrimaryForeground)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
-                .background(AppTheme.primary)
+                .background(AppTheme.brandPrimary)
                 .cornerRadius(16)
-                .shadow(color: AppTheme.primary.opacity(0.3), radius: 14, x: 0, y: 4)
+                .shadow(color: AppTheme.brandPrimary.opacity(0.3), radius: 14, x: 0, y: 4)
             }
             .buttonStyle(.plain)
             .opacity(selectedRole == nil ? 0.5 : 1)
@@ -190,15 +190,15 @@ struct RoleCard: View {
                     HStack(spacing: 8) {
                         Text(title)
                             .font(.system(size: 17, weight: .semibold))
-                            .foregroundStyle(isSelected ? AppTheme.primary : AppTheme.foreground)
+                            .foregroundStyle(isSelected ? AppTheme.brandPrimary : AppTheme.foreground)
 
                         if showPopularBadge {
                             Text("MÁS POPULAR")
                                 .font(.system(size: 10, weight: .bold))
-                                .foregroundStyle(AppTheme.primary)
+                                .foregroundStyle(AppTheme.brandPrimary)
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
-                                .background(AppTheme.secondary)
+                                .background(AppTheme.brandSecondary)
                                 .cornerRadius(4)
                         }
                     }
@@ -213,17 +213,17 @@ struct RoleCard: View {
                 if isSelected {
                     Image(systemName: "checkmark")
                         .font(.system(size: 18, weight: .bold))
-                        .foregroundStyle(AppTheme.primary)
+                        .foregroundStyle(AppTheme.brandPrimary)
                 }
             }
             .padding(16)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(isSelected ? AppTheme.secondary.opacity(0.3) : AppTheme.card)
+                    .fill(isSelected ? AppTheme.brandSecondary.opacity(0.3) : AppTheme.card)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(isSelected ? AppTheme.primary : AppTheme.border, lineWidth: isSelected ? 2 : 1)
+                    .stroke(isSelected ? AppTheme.brandPrimary : AppTheme.border, lineWidth: isSelected ? 2 : 1)
             )
         }
         .buttonStyle(.plain)
@@ -231,5 +231,5 @@ struct RoleCard: View {
 }
 
 #Preview {
-    OnboardingRoleView(onContinue: {}, onBack: {})
+    OnboardingRoleView(selectedRole: .constant(nil), onContinue: {}, onBack: {})
 }

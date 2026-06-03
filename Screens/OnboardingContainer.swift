@@ -4,12 +4,14 @@ enum OnboardingStep {
     case school
     case name
     case role
+    case setupStore
     case complete
 }
 
 struct OnboardingContainer: View {
     @State private var currentStep: OnboardingStep = .school
     @State private var selectedSchool: String?
+    @State private var selectedRole: UserRole?
 
     var body: some View {
         ZStack {
@@ -40,9 +42,14 @@ struct OnboardingContainer: View {
                 .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             case .role:
                 OnboardingRoleView(
+                    selectedRole: $selectedRole,
                     onContinue: {
                         withAnimation(.easeInOut(duration: 0.3)) {
-                            currentStep = .complete
+                            if selectedRole == .seller || selectedRole == .both {
+                                currentStep = .setupStore
+                            } else {
+                                currentStep = .complete
+                            }
                         }
                     },
                     onBack: {
@@ -52,8 +59,22 @@ struct OnboardingContainer: View {
                     }
                 )
                 .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+            case .setupStore:
+                SetupStoreView(
+                    onContinue: {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            currentStep = .complete
+                        }
+                    },
+                    onBack: {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            currentStep = .role
+                        }
+                    }
+                )
+                .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             case .complete:
-                Text("Onboarding completo")
+                HomeView()
             }
         }
         .animation(.easeInOut(duration: 0.3), value: currentStep)
