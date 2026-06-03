@@ -71,8 +71,8 @@ struct OnboardingSchoolView: View {
                 .foregroundStyle(AppTheme.mutedForeground)
                 .lineSpacing(1.5)
         }
-        .padding(.horizontal, 24)
-        .padding(.top, 44)
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
         .padding(.bottom, 16)
     }
 
