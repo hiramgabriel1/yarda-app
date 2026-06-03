@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct OnboardingSchoolView: View {
-    @State private var selectedSchool: String? = "IPN"
-    @State private var searchText = ""
+    @Binding var selectedSchool: String?
+    let onContinue: () -> Void
 
     let popularSchools = [
         School(name: "UNAM", type: "Universidad", location: "Ciudad de México", isSelected: false),
@@ -53,23 +53,26 @@ struct OnboardingSchoolView: View {
             }
             .padding(.bottom, 32)
 
-            Text("PASO 1 DE 3")
-                .font(.system(size: 12, weight: .semibold))
-                .foregroundStyle(AppTheme.primary)
-                .tracking(0.8)
-                .padding(.bottom, 4)
+            VStack(alignment: .leading, spacing: 0) {
+                Text("PASO 1 DE 3")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(AppTheme.primary)
+                    .tracking(0.8)
+                    .padding(.bottom, 4)
 
-            Text("¿Dónde estudias?")
-                .font(.system(size: 30, weight: .bold))
-                .foregroundStyle(AppTheme.foreground)
-                .tracking(-0.5)
-                .lineSpacing(1.15)
-                .padding(.bottom, 8)
+                Text("¿Dónde estudias?")
+                    .font(.system(size: 30, weight: .bold))
+                    .foregroundStyle(AppTheme.foreground)
+                    .tracking(-0.5)
+                    .lineSpacing(1.15)
+                    .padding(.bottom, 8)
 
-            Text("Conéctate con vendedores de tu escuela.")
-                .font(.system(size: 15))
-                .foregroundStyle(AppTheme.mutedForeground)
-                .lineSpacing(1.5)
+                Text("Conéctate con vendedores de tu escuela.")
+                    .font(.system(size: 15))
+                    .foregroundStyle(AppTheme.mutedForeground)
+                    .lineSpacing(1.5)
+            }
+            .padding(.leading, -8)
         }
         .padding(.horizontal, 16)
         .padding(.top, 8)
@@ -91,7 +94,7 @@ struct OnboardingSchoolView: View {
         .padding(.vertical, 12)
         .background(AppTheme.input)
         .cornerRadius(16)
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 16)
         .padding(.bottom, 16)
     }
 
@@ -101,7 +104,7 @@ struct OnboardingSchoolView: View {
             .foregroundStyle(AppTheme.mutedForeground)
             .tracking(0.6)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 16)
             .padding(.bottom, 8)
     }
 
@@ -118,11 +121,7 @@ struct OnboardingSchoolView: View {
                     )
                 ) {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        if selectedSchool == school.name {
-                            selectedSchool = nil
-                        } else {
-                            selectedSchool = school.name
-                        }
+                        selectedSchool = school.name
                     }
                 }
 
@@ -142,7 +141,7 @@ struct OnboardingSchoolView: View {
 
     private var footerSection: some View {
         VStack(spacing: 0) {
-            Button(action: {}) {
+            Button(action: onContinue) {
                 HStack(spacing: 8) {
                     Text("Continuar")
                         .font(.system(size: 15, weight: .semibold))
@@ -159,6 +158,8 @@ struct OnboardingSchoolView: View {
                 .shadow(color: AppTheme.primary.opacity(0.3), radius: 14, x: 0, y: 4)
             }
             .buttonStyle(.plain)
+            .opacity(selectedSchool == nil ? 0.5 : 1)
+            .disabled(selectedSchool == nil)
 
             HStack(spacing: 0) {
                 Text("¿No encuentras tu escuela? ")
@@ -171,12 +172,12 @@ struct OnboardingSchoolView: View {
             }
             .padding(.top, 12)
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 16)
         .padding(.top, 16)
         .padding(.bottom, 60)
     }
 }
 
 #Preview {
-    OnboardingSchoolView()
+    OnboardingSchoolView(selectedSchool: .constant(nil), onContinue: {})
 }

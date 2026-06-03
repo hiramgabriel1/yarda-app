@@ -11,7 +11,7 @@ import SwiftUI
 struct yarda_appApp: App {
     var body: some Scene {
         WindowGroup {
-            OnboardingSchoolView()
+            OnboardingContainer()
         }
     }
 }
