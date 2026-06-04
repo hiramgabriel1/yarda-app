@@ -90,7 +90,7 @@ struct ProductDetailView: View {
                     }
                 }
                 .padding(.horizontal, 16)
-                .padding(.top, 4)
+                .padding(.top, 56)
 
                 Spacer()
 
