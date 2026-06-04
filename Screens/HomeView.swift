@@ -58,7 +58,7 @@ struct HomeView: View {
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(AppTheme.mutedForeground)
 
-                Text("Hola, Andrea 👋")
+                Text("Hola, Hiram 👋")
                     .font(.system(size: 20, weight: .bold))
                     .foregroundStyle(AppTheme.foreground)
                     .tracking(-0.4)
