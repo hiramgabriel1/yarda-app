@@ -235,8 +235,8 @@ struct HomeView: View {
             ) {}
             .frame(maxWidth: .infinity)
         }
-        .padding(.top, 12)
-        .padding(.bottom, 32)
+        .padding(.top, 6)
+        .padding(.bottom, 0)
         .background(AppTheme.background)
         .overlay(
             Rectangle()
