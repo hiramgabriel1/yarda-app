@@ -3,6 +3,7 @@ import SwiftUI
 struct HomeView: View {
     @State private var selectedCategory = "Todo"
     @State private var searchText = ""
+    @State private var selectedProduct: Product?
 
     let categories = [
         (emoji: "✦", name: "Todo"),
@@ -19,12 +20,12 @@ struct HomeView: View {
     ]
 
     let products = [
-        Product(title: "Calcetines tejidos a mano", price: 80, seller: "Sofía R.", tag: "Nuevo"),
-        Product(title: "Burritos de frijol y queso", price: 35, seller: "Diego M.", tag: nil),
-        Product(title: "Aretes de resina", price: 120, seller: "Valentina P.", tag: "¡Oferta!"),
-        Product(title: "Camiseta vintage Tec", price: 200, seller: "Carlos M.", tag: nil),
-        Product(title: "Asesoría de Cálculo", price: 150, seller: "Marcos L.", tag: nil),
-        Product(title: "Pulseras de macramé", price: 60, seller: "Sofía R.", tag: nil),
+        Product(title: "Calcetines tejidos a mano", price: 80, seller: "Sofía R.", tag: "Nuevo", description: "Calcetines tejidos a mano con estambre 100% acrílico suave."),
+        Product(title: "Burritos de frijol y queso", price: 35, seller: "Diego M.", tag: nil, description: "Burritos frescos con frijol y queso."),
+        Product(title: "Aretes de resina", price: 120, seller: "Valentina P.", tag: "¡Oferta!", description: "Aretes artesanales de resina."),
+        Product(title: "Camiseta vintage Tec", price: 200, seller: "Carlos M.", tag: nil, description: "Camiseta vintage del Tec de Monterrey."),
+        Product(title: "Asesoría de Cálculo", price: 150, seller: "Marcos L.", tag: nil, description: "Asesoría personalizada de cálculo."),
+        Product(title: "Pulseras de macramé", price: 60, seller: "Sofía R.", tag: nil, description: "Pulseras tejidas en macramé."),
     ]
 
     var body: some View {
@@ -40,7 +41,7 @@ struct HomeView: View {
 
                 productsSection
 
-                Color.clear.frame(height: 16)
+                Color.clear.frame(height: 100)
             }
         }
         .background(AppTheme.background)
@@ -183,10 +184,16 @@ struct HomeView: View {
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                 ForEach(products) { product in
-                    ProductCard(product: product)
+                    Button(action: { selectedProduct = product }) {
+                        ProductCard(product: product)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             .padding(.horizontal, 20)
+        }
+        .fullScreenCover(item: $selectedProduct) { product in
+            ProductDetailView(product: product)
         }
     }
 
@@ -197,14 +204,14 @@ struct HomeView: View {
                 label: "Inicio",
                 isSelected: true
             ) {}
+            .frame(maxWidth: .infinity)
 
             TabBarItem(
                 icon: "magnifyingglass",
                 label: "Buscar",
                 isSelected: false
             ) {}
-
-            Spacer()
+            .frame(maxWidth: .infinity)
 
             TabBarItem(
                 icon: "plus",
@@ -212,23 +219,24 @@ struct HomeView: View {
                 isSelected: false,
                 isElevated: true
             ) {}
-
-            Spacer()
+            .frame(maxWidth: .infinity)
 
             TabBarItem(
                 icon: "bag.fill",
                 label: "Pedidos",
                 isSelected: false
             ) {}
+            .frame(maxWidth: .infinity)
 
             TabBarItem(
                 icon: "person.fill",
                 label: "Perfil",
                 isSelected: false
             ) {}
+            .frame(maxWidth: .infinity)
         }
-        .padding(.top, 8)
-        .padding(.bottom, 28)
+        .padding(.top, 12)
+        .padding(.bottom, 32)
         .background(AppTheme.background)
         .overlay(
             Rectangle()
@@ -337,12 +345,17 @@ struct FeaturedSellerCard: View {
     }
 }
 
-struct Product: Identifiable {
+struct Product: Identifiable, Hashable {
     let id = UUID()
     let title: String
     let price: Int
     let seller: String
     let tag: String?
+    let description: String
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
 struct ProductCard: View {
@@ -418,7 +431,6 @@ struct TabBarItem: View {
                             .font(.system(size: 20, weight: .bold))
                             .foregroundStyle(.white)
                     }
-                    .offset(y: -10)
 
                     Text(label)
                         .font(.system(size: 12, weight: .medium))
